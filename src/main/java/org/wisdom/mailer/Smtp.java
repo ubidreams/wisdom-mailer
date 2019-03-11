@@ -82,6 +82,11 @@ public class Smtp implements MailSenderService {
     protected String fromName;
 
     /**
+     * The main 'replyTo' mail.
+     */
+    protected List<String> replyTo;
+
+    /**
      * The port.
      */
     protected int port;
@@ -120,6 +125,7 @@ public class Smtp implements MailSenderService {
         host = configuration.getWithDefault(CONFHOST, MOCK_SERVER_NAME);
         from = configuration.getWithDefault("mail.smtp.from", DEFAULT_FROM);
         fromName = configuration.getWithDefault("mail.smtp.from-name", null);
+        replyTo = configuration.getList("mail.smtp.reply-to");
         useMock = MOCK_SERVER_NAME.equals(host);
 
         properties = new Properties();
@@ -280,6 +286,14 @@ public class Smtp implements MailSenderService {
             // Manage to and cc
             msg.setRecipients(Message.RecipientType.TO, convert(mail.to()));
             msg.setRecipients(Message.RecipientType.CC, convert(mail.cc()));
+
+            // Manage replyTo
+            if (!mail.replyTo().isEmpty()) {
+                msg.setReplyTo(convert(mail.replyTo()));
+
+            } else if (replyTo != null && !replyTo.isEmpty()) {
+                msg.setReplyTo(convert(replyTo));
+            }
 
             msg.setSubject(mail.subject());
 

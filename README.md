@@ -32,6 +32,7 @@ using system properties. For all the properties described below you can use eith
 | `mail.smtp.port`          |the STMP server port. Default is computed from to the connection type. |25 or 465       |
 | `mail.smtp.from`          |the default _from_ address when it is not explicitly set               | No value       |
 | `mail.smtp.from-name`     |the sender name                                                        | No  value      |
+| `mail.smtp.reply-to`      |the 'reply-to' emails list                                             | No  value      |
 | `mail.smtp.username`      |the account username when the service requires authentication          | _required_     |
 | `mail.smtp.password`      |the account password when the service requires authentication          | _required_     |
 | `mail.tls.trustedservers` |(TLS) "*" or the list of trusted servers with invalid certificates     | empty          |
